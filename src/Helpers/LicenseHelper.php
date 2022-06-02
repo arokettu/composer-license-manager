@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Arokettu\Composer\LicenseManager\Helpers;
 
 use Arokettu\Composer\LicenseManager\Config\Config;
+use Arokettu\Composer\LicenseManager\LicenseManagerPlugin;
 use Composer\Package\CompletePackageInterface;
 
 /**
