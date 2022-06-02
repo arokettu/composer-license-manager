@@ -24,10 +24,6 @@ class LicenseHelper
                 continue; // license expressions are not supported for now
             }
 
-            if ($isDev && ConfigHelper::isInList($license, $config->getLicensesAllowedDev())) {
-                return true; // whitelisted for dev
-            }
-
             if (ConfigHelper::isInList($license, $config->getLicensesForbidden())) {
                 continue; // blacklisted
             }

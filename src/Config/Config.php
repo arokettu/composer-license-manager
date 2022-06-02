@@ -18,8 +18,6 @@ final class Config
     /** @var string[][] */
     private $licensesForbidden;
     /** @var string[][] */
-    private $licensesAllowedDev;
-    /** @var string[][] */
     private $packagesAllowed;
 
     public static function fromComposer(Composer $composer): self
@@ -34,7 +32,6 @@ final class Config
         return new self(
             ConfigHelper::valueToArray($config['licenses']['allowed'] ?? ['*']),
             ConfigHelper::valueToArray($config['licenses']['forbidden'] ?? []),
-            ConfigHelper::valueToArray($config['licenses']['allowed-dev'] ?? []),
             ConfigHelper::valueToArray($config['packages']['allowed'] ?? [])
         );
     }
@@ -42,12 +39,10 @@ final class Config
     private function __construct(
         array $licensesAllowed,
         array $licensesForbidden,
-        array $licensesAllowedDev,
         array $packagesAllowed
     ) {
         $this->licensesAllowed = $this->splitGlobs($licensesAllowed);
         $this->licensesForbidden = $this->splitGlobs($licensesForbidden);
-        $this->licensesAllowedDev = $this->splitGlobs($licensesAllowedDev);
         $this->packagesAllowed = $this->splitGlobs($packagesAllowed);
     }
 
@@ -65,14 +60,6 @@ final class Config
     public function getLicensesForbidden(): array
     {
         return $this->licensesForbidden;
-    }
-
-    /**
-     * @return string[][]
-     */
-    public function getLicensesAllowedDev(): array
-    {
-        return $this->licensesAllowedDev;
     }
 
     /**
