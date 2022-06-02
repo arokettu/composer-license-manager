@@ -6,10 +6,15 @@ namespace Arokettu\Composer\LicenseManager;
 
 use Composer\Plugin\Capability\CommandProvider;
 
+/**
+ * @internal
+ */
 final class Commands implements CommandProvider
 {
     public function getCommands(): array
     {
-        return [];
+        return [
+            new Commands\ScanCommand(),
+        ];
     }
 }

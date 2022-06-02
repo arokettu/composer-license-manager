@@ -10,8 +10,13 @@ use Composer\Plugin\Capability\CommandProvider;
 use Composer\Plugin\Capable;
 use Composer\Plugin\PluginInterface;
 
+/**
+ * @internal
+ */
 final class LicenseManagerPlugin implements PluginInterface, Capable
 {
+    public const PACKAGE = 'arokettu/composer-license-manager';
+
     public function activate(Composer $composer, IOInterface $io): void
     {
     }

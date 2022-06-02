@@ -1,8 +1,8 @@
 {
     "name": "arokettu/composer-license-manager",
+    "type": "composer-plugin",
     "description": "License management plugin for Composer",
     "keywords": ["composer", "license"],
-    "type": "composer-plugin",
     "license": "MIT",
     "authors": [
         {
@@ -15,10 +15,16 @@
     "support": {
     },
     "config": {
+        "platform": {
+            "php": "7.1.99"
+        },
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         },
         "sort-packages": true
+    },
+    "extra": {
+        "class": "Arokettu\\Composer\\LicenseManager\\LicenseManagerPlugin"
     },
     "autoload": {
         "psr-4": {
@@ -26,7 +32,8 @@
         }
     },
     "require": {
-        "php": "^7.1"
+        "php": "^7.1 || ^8",
+        "composer-plugin-api": "^2"
     },
     "require-dev": {
         "composer/composer": "^2.0",
