@@ -1,0 +1,37 @@
+{
+    "name": "arokettu/composer-license-manager",
+    "description": "License management plugin for Composer",
+    "keywords": ["composer", "license"],
+    "type": "composer-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anton Smirnov",
+            "email": "sandfox@sandfox.me",
+            "role": "developer",
+            "homepage": "https://sandfox.me/"
+        }
+    ],
+    "support": {
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Arokettu\\Composer\\LicenseManager\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^7.1"
+    },
+    "require-dev": {
+        "composer/composer": "^2.0",
+        "sandfox.dev/code-standard": "^10@dev",
+        "squizlabs/php_codesniffer": "*",
+        "vimeo/psalm": "^4.23"
+    }
+}

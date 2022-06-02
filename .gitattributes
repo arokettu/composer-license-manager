@@ -1,0 +1,3 @@
+/.git*              export-ignore
+/*.yml              export-ignore
+/*.xml              export-ignore
