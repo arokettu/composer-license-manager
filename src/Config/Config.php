@@ -13,9 +13,13 @@ use Composer\Composer;
  */
 final class Config
 {
+    /** @var string[][] */
     private $licensesAllowed;
+    /** @var string[][] */
     private $licensesForbidden;
+    /** @var string[][] */
     private $licensesAllowedDev;
+    /** @var string[][] */
     private $packagesAllowed;
 
     public static function fromComposer(Composer $composer): self
@@ -41,29 +45,58 @@ final class Config
         array $licensesAllowedDev,
         array $packagesAllowed
     ) {
-        $this->licensesAllowed = $licensesAllowed;
-        $this->licensesForbidden = $licensesForbidden;
-        $this->licensesAllowedDev = $licensesAllowedDev;
-        $this->packagesAllowed = $packagesAllowed;
+        $this->licensesAllowed = $this->splitGlobs($licensesAllowed);
+        $this->licensesForbidden = $this->splitGlobs($licensesForbidden);
+        $this->licensesAllowedDev = $this->splitGlobs($licensesAllowedDev);
+        $this->packagesAllowed = $this->splitGlobs($packagesAllowed);
     }
 
+    /**
+     * @return string[][]
+     */
     public function getLicensesAllowed(): array
     {
         return $this->licensesAllowed;
     }
 
+    /**
+     * @return string[][]
+     */
     public function getLicensesForbidden(): array
     {
         return $this->licensesForbidden;
     }
 
+    /**
+     * @return string[][]
+     */
     public function getLicensesAllowedDev(): array
     {
         return $this->licensesAllowedDev;
     }
 
+    /**
+     * @return string[][]
+     */
     public function getPackagesAllowed(): array
     {
         return $this->packagesAllowed;
+    }
+
+    /**
+     * @return string[][]
+     */
+    private function splitGlobs(array $list): array
+    {
+        return array_reduce($list, static function (array $carry, string $item) {
+            /** @var string[][] $carry */
+            if (str_ends_with($item, '*')) {
+                $carry['glob'][] = substr($item, 0, -1);
+            } else {
+                $carry['list'][] = $item;
+            }
+
+            return $carry;
+        }, ['list' => [], 'glob' => []]);
     }
 }

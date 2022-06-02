@@ -33,7 +33,8 @@
     },
     "require": {
         "php": "^7.1 || ^8",
-        "composer-plugin-api": "^2"
+        "composer-plugin-api": "^2",
+        "symfony/polyfill-php80": "^1.16"
     },
     "require-dev": {
         "composer/composer": "^2.0",

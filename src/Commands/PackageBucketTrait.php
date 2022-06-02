@@ -10,6 +10,7 @@ use Composer\Repository\RepositoryInterface;
 /**
  * This logic was extracted from Composer 2.2
  * @see \Composer\Command\LicensesCommand
+ * @internal
  */
 trait PackageBucketTrait
 {

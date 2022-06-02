@@ -1,0 +1,30 @@
+{
+    "repositories": [
+        {
+            "type": "path",
+            "version": "dev-master",
+            "url": ".."
+        }
+    ],
+    "require": {
+        "arokettu/composer-license-manager": "dev-master",
+        "laminas/laminas-code": "^4.5",
+        "symfony/string": "^6.1"
+    },
+    "config": {
+        "allow-plugins": {
+            "arokettu/composer-license-manager": true
+        }
+    },
+    "extra": {
+        "arokettu/composer-license-manager": {
+            "licenses": {
+                "allowed": ["MIT", "BSD-*"],
+                "forbidden": ["BSD-3-Clause"]
+            },
+            "packages": {
+                "allowed": ["laminas/laminas-code"]
+            }
+        }
+    }
+}
