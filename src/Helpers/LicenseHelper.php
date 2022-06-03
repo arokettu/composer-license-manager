@@ -13,7 +13,7 @@ use Composer\Package\CompletePackageInterface;
  */
 class LicenseHelper
 {
-    public static function isPermitted(CompletePackageInterface $package, Config $config, bool $isDev): bool
+    public static function isPermitted(CompletePackageInterface $package, Config $config): bool
     {
         if (ConfigHelper::isInList($package->getName(), $config->getPackagesAllowed())) {
             return true;

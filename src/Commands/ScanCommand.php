@@ -17,8 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class ScanCommand extends BaseCommand
 {
-    use PackageBucketTrait;
-
     private const EXIT_SUCCESS = 0;
     private const EXIT_FAILURE = 1;
 
@@ -41,28 +39,17 @@ final class ScanCommand extends BaseCommand
         $io = $this->getIO();
         $config = Config::fromComposer($composer);
 
-        $root = $composer->getPackage();
         $repo = $composer->getRepositoryManager()->getLocalRepository();
-
-        $packages = $this->filterRequiredPackages($repo, $root);
-
-        if ($input->getOption('no-dev')) {
-            $packagesDev = [];
-        } else {
-            /** @var CompletePackageInterface[] $allPackages */
-            $allPackages = $repo->getPackages();
-            $packagesDev = $this->appendPackages($allPackages, array());
-            $packagesDev = array_diff_key($packagesDev, $packages);
-        }
+        /** @var CompletePackageInterface[] $packages */
+        $packages = $repo->getPackages();
 
         $exit = self::EXIT_SUCCESS;
 
-        foreach ([[$packages, false], [$packagesDev, true]] as [$packageList, $isDev]) {
-            foreach ($packageList as $package) {
-                if (LicenseHelper::isPermitted($package, $config, $isDev) === false) {
-                    $license = implode(', ', $package->getLicense());
-                    $io->write("<error>{$package->getName()} has forbidden license: {$license}</error>");
-                }
+        foreach ($packages as $package) {
+            if (LicenseHelper::isPermitted($package, $config) === false) {
+                $license = implode(', ', $package->getLicense());
+                $io->write("<error>{$package->getName()} has forbidden license: {$license}</error>");
+                $exit = self::EXIT_FAILURE;
             }
         }
 
