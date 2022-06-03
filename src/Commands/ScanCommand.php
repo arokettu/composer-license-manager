@@ -9,7 +9,6 @@ use Arokettu\Composer\LicenseManager\Helpers\LicenseHelper;
 use Composer\Command\BaseCommand;
 use Composer\Package\CompletePackageInterface;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -24,13 +23,6 @@ final class ScanCommand extends BaseCommand
     {
         $this->setName('licenses:scan');
         $this->setDescription('Asserts whether installed packages conform to the license policy.');
-
-        $this->addOption(
-            'no-dev',
-            null,
-            InputOption::VALUE_NONE,
-            'Disables search in require-dev packages.'
-        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
