@@ -19,17 +19,28 @@ class LicenseHelper
             return true;
         }
 
+        $allowed = $config->getLicensesAllowed();
+        $forbidden = $config->getLicensesForbidden();
+
         foreach ($package->getLicense() as $license) {
             if (str_starts_with($license, '(')) {
                 continue; // license expressions are not supported for now
             }
 
-            if (ConfigHelper::isInList($license, $config->getLicensesForbidden())) {
-                continue; // blacklisted
+            if (ConfigHelper::isInPlainList($license, $forbidden)) {
+                continue; // blacklisted by name
             }
 
-            if (ConfigHelper::isInList($license, $config->getLicensesAllowed())) {
-                return true; // whitelisted
+            if (ConfigHelper::isInPlainList($license, $allowed)) {
+                return true; // whitelisted by name
+            }
+
+            if (ConfigHelper::isInGlobList($license, $forbidden)) {
+                continue; // blacklisted by glob
+            }
+
+            if (ConfigHelper::isInGlobList($license, $allowed)) {
+                return true; // whitelisted by glob
             }
         }
 

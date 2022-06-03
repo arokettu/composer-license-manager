@@ -30,10 +30,22 @@ final class ConfigHelper
      */
     public static function isInList(string $value, array $list): bool
     {
-        if (\in_array($value, $list['list'])) {
-            return true;
-        }
+        return self::isInPlainList($value, $list) || self::isInGlobList($value, $list);
+    }
 
+    /**
+     * @param string[][] $list
+     */
+    public static function isInPlainList(string $value, array $list): bool
+    {
+        return \in_array($value, $list['list']);
+    }
+
+    /**
+     * @param string[][] $list
+     */
+    public static function isInGlobList(string $value, array $list): bool
+    {
         foreach ($list['glob'] as $prefix) {
             if (str_starts_with($value, $prefix)) {
                 return true;
