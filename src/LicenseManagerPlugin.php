@@ -20,9 +20,9 @@ final class LicenseManagerPlugin implements PluginInterface, Capable, EventSubsc
 {
     public const PACKAGE = 'arokettu/composer-license-manager';
 
-    /** @var Composer */
+    /** @var Composer|null */
     private $composer = null;
-    /** @var IOInterface */
+    /** @var IOInterface|null */
     private $io = null;
 
     public function activate(Composer $composer, IOInterface $io): void
@@ -53,6 +53,10 @@ final class LicenseManagerPlugin implements PluginInterface, Capable, EventSubsc
 
     public function handlePrePoolCreate(PrePoolCreateEvent $event): void
     {
+        if ($this->composer === null || $this->io === null) {
+            throw new \LogicException('Composer and IO must be initialized');
+        }
+
         (new EventHandlers\PrePoolCreateEventHandler($this->composer, $this->io))->handle($event);
     }
 }
