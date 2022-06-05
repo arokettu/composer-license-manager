@@ -20,8 +20,8 @@ class LicenseHelper
 
         $licenses = $package->getLicense();
 
-        if ($licenses === [] && $config->isEmptyLicenseAllowed()) {
-            return true;
+        if ($licenses === []) {
+            return $config->isEmptyLicenseAllowed();
         }
 
         $allowed = $config->getLicensesAllowed();
