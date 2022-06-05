@@ -1,0 +1,60 @@
+stages:
+  - test
+#  - report
+
+cache:
+  key: composer-cache
+  paths:
+    - .composer-cache/
+
+.test:
+  before_script:
+    # install system packages
+    - apt-get update && apt-get install -y git unzip
+    # install extensions
+    - if [ "$INSTALL_XDEBUG" -eq 1 ]; then curl --location https://github.com/FriendsOfPHP/pickle/releases/latest/download/pickle.phar --output pickle.phar; php pickle.phar install --defaults xdebug; docker-php-ext-enable xdebug; fi
+    # install composer
+    - php -r "copy('https://composer.github.io/installer.sig', '/tmp/composer.sig');"
+    - php -r "copy('https://getcomposer.org/installer', '/tmp/composer-setup.php');"
+    - php -r '$expected = file_get_contents("/tmp/composer.sig"); $actual = hash_file("sha384", "/tmp/composer-setup.php"); exit(intval(!hash_equals($expected, $actual)));'
+    - php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+    - chmod +x /usr/local/bin/composer
+    - rm /tmp/composer-setup.php /tmp/composer.sig
+    # cache dependencies
+    - composer config -g cache-dir "$(pwd)/.composer-cache"
+  script:
+    - composer config platform --unset
+    - composer update
+    - vendor/bin/phpunit
+
+# coverage
+#coverage:
+#  variables:
+#    INSTALL_XDEBUG: 1
+#  extends: .test
+#  stage: report
+#  only:
+#    - master
+#  image: php:8.0
+#  script:
+#    - composer update
+#    - XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-clover coverage.xml
+#    - bash <(curl -s https://codecov.io/bash)
+
+# lowest version
+test-7.1:
+  extends: .test
+  stage: test
+  image: php:7.1
+
+# latest 7
+test-7:
+  extends: .test
+  stage: test
+  image: php:7
+
+# latest 8
+test-8:
+  extends: .test
+  stage: test
+  image: php:8
