@@ -31,6 +31,11 @@ final class Config
             throw new \RuntimeException('Invalid config format: License Manager config must be an array');
         }
 
+        return self::fromArray($config);
+    }
+
+    public static function fromArray(array $config): self
+    {
         return new self(
             ConfigHelper::valueToArray($config['licenses']['allowed'] ?? ['*']),
             $config['licenses']['allow-empty'] ?? false,
@@ -39,7 +44,7 @@ final class Config
         );
     }
 
-    public function __construct(
+    private function __construct(
         array $licensesAllowed,
         bool $allowEmptyLicense,
         array $licensesForbidden,

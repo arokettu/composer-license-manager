@@ -13,7 +13,8 @@
     "require": {
         "arokettu/composer-license-manager": "dev-master",
         "laminas/laminas-code": "^4.5",
-        "symfony/string": "^6.1"
+        "symfony/string": "^6.1",
+        "npm-asset/jquery-form": "^4.3"
     },
     "config": {
         "allow-plugins": {
@@ -25,10 +26,10 @@
             "licenses": {
                 "allowed": ["MIT", "BSD-*", "ISC", "artistic-2.0", "apache-2.0", "(wtfpl*", "*"],
                 "forbidden": ["BSD-3-Clause"],
-                "allow-empty": true
+                "allow-empty": false
             },
             "packages": {
-                "allowed": ["laminas/laminas-code"]
+                "allowed": ["laminas/laminas-code", "npm-asset/deep-extend"]
             }
         }
     }

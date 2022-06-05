@@ -19,6 +19,7 @@
             "php": "7.1.99"
         },
         "allow-plugins": {
+            "composer/package-versions-deprecated": true,
             "dealerdirect/phpcodesniffer-composer-installer": true
         },
         "sort-packages": true
@@ -26,9 +27,17 @@
     "extra": {
         "class": "Arokettu\\Composer\\LicenseManager\\LicenseManagerPlugin"
     },
+    "scripts": {
+        "cov": "php74 -d xdebug.mode=coverage vendor/bin/phpunit --coverage-html reports/coverage --whitelist src"
+    },
     "autoload": {
         "psr-4": {
             "Arokettu\\Composer\\LicenseManager\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Arokettu\\Composer\\LicenseManager\\Tests\\": "tests/"
         }
     },
     "require": {
@@ -38,6 +47,7 @@
     },
     "require-dev": {
         "composer/composer": "^2.0",
+        "phpunit/phpunit": "^7.5 || ^9.5",
         "sandfox.dev/code-standard": "^10@dev",
         "squizlabs/php_codesniffer": "*",
         "vimeo/psalm": "^4.23"
