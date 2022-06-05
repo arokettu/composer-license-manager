@@ -15,7 +15,7 @@ Example
                     "allowed": ["MIT", "LGPL-*"],
                     "forbidden": ["GPL-3.0", "AGPL-*"],
                     "allow-empty": true
-                }
+                },
                 "packages": {
                     "allowed": ["foo/bar", "safenamespace/*"]
                 },

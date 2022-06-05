@@ -8,6 +8,34 @@ License management plugin for Composer.
 
 ## Features
 
+The plugin is configured in the ``extras`` section of the ``composer.json`` file.
+
+```json
+{
+    "extras": {
+        "arokettu/composer-license-manager": {
+            "licenses": {
+                "allowed": ["MIT", "LGPL-*"],
+                "forbidden": ["GPL-3.0", "AGPL-*"],
+                "allow-empty": true
+            },
+            "packages": {
+                "allowed": ["foo/bar", "safenamespace/*"]
+            },
+            "enforced": true
+        }
+    }
+}
+```
+
+### Scan for undesired licenses
+
+Run ``composer licenses:scan`` to check installed packages for undesired licenses.
+
+### Policy enforcement
+
+With `"enforced": true` (default setting) the plugin will prevent installation of packages with undesired licenses during `composer install` and `composer update`. 
+
 ## Installation
 
 ```sh 
