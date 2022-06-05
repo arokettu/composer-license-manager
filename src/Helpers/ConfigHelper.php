@@ -14,15 +14,21 @@ final class ConfigHelper
      */
     public static function valueToArray($value): array
     {
-        if (\is_array($value)) {
-            return $value;
+        if (!\is_array($value)) {
+            $value = [$value];
         }
 
-        if (\is_scalar($value)) {
-            return [\strval($value)];
+        if (!array_is_list($value)) {
+            throw new \InvalidArgumentException('Config array must be a list');
         }
 
-        throw new \RuntimeException('Unexpected values are present in the config');
+        foreach ($value as $v) {
+            if (!\is_string($v)) {
+                throw new \InvalidArgumentException('Config array must be a list of strings');
+            }
+        }
+
+        return $value;
     }
 
     /**
