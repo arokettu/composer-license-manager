@@ -2,7 +2,7 @@
     "name": "arokettu/composer-license-manager",
     "type": "composer-plugin",
     "description": "License management plugin for Composer",
-    "keywords": ["composer", "license"],
+    "keywords": ["composer", "composer plugin", "license", "licenses", "license management"],
     "license": "MIT",
     "authors": [
         {
@@ -13,6 +13,9 @@
         }
     ],
     "support": {
+        "source": "https://gitlab.com/sandfox/composer-license-manager",
+        "issues": "https://gitlab.com/sandfox/composer-license-manager/-/issues",
+        "chat": "https://gitter.im/arokettu/community"
     },
     "config": {
         "platform": {
