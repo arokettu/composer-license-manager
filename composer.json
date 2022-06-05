@@ -12,9 +12,11 @@
             "homepage": "https://sandfox.me/"
         }
     ],
+    "homepage": "https://sandfox.dev/php/composer-license-manager.html",
     "support": {
         "source": "https://gitlab.com/sandfox/composer-license-manager",
         "issues": "https://gitlab.com/sandfox/composer-license-manager/-/issues",
+        "docs": "https://composer-license-manager.readthedocs.io/",
         "chat": "https://gitter.im/arokettu/community"
     },
     "config": {
