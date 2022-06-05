@@ -39,6 +39,13 @@ Licenses section configures desired and undesired licenses.
     Allow packages with no license set.
     Default: ``false``
 
+.. note::
+    Whitelisting licenses by glob may be unwise.
+    For example ``BSD-*`` `will allow <https://spdx.org/licenses/>`__ such licenses as
+    ``BSD-Protection`` (non GPL-compatible),
+    ``BSD-3-Clause-No-Nuclear-License`` and ``BSD-3-Clause-No-Military-License`` (both non-free)
+
+
 Check order:
 
 #. exact forbidden licenses
