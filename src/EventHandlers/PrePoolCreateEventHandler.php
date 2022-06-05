@@ -44,7 +44,7 @@ class PrePoolCreateEventHandler
                 }
 
                 if ($package instanceof CompletePackageInterface) {
-                    if (LicenseHelper::isPermitted($package, $config, false)) {
+                    if (LicenseHelper::isPermitted($package, $config)) {
                         return true;
                     } else {
                         $filtered[$packageName] = $package->getLicense();
@@ -60,7 +60,7 @@ class PrePoolCreateEventHandler
             $this->io->write('<warning>Some packages were excluded due to license policy:</warning>');
             $idx = 1;
             foreach ($filtered as $package => $licenses) {
-                $license = implode(' | ', $licenses);
+                $license = $licenses === [] ? '(no license set)' : implode(' | ', $licenses);
                 $this->io->write("<warning>{$idx}. {$package}: {$license}</warning>");
                 ++$idx;
             }
