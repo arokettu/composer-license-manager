@@ -35,35 +35,37 @@ class PrePoolCreateEventHandler
         /** @var array<string, array<int, string>> $filtered */
         $filtered = [];
 
-        $event->setPackages(
-            array_filter($event->getPackages(), function (PackageInterface $package) use (&$filtered, $config) {
-                $packageName = $package->getName();
+        $packages = array_filter($event->getPackages(), function (PackageInterface $package) use (&$filtered, $config) {
+            $packageName = $package->getName();
 
-                if ($packageName === LicenseManagerPlugin::PACKAGE || !str_contains($packageName, '/')) {
+            if ($packageName === LicenseManagerPlugin::PACKAGE || !str_contains($packageName, '/')) {
+                return true;
+            }
+
+            if ($package instanceof CompletePackageInterface) {
+                if (LicenseHelper::isPermitted($package, $config)) {
                     return true;
-                }
-
-                if ($package instanceof CompletePackageInterface) {
-                    if (LicenseHelper::isPermitted($package, $config)) {
-                        return true;
-                    } else {
-                        $filtered[$packageName] = $package->getLicense();
-                        return false;
-                    }
                 } else {
-                    throw new \LogicException('Filtering can work only on complete packages');
+                    $filtered[$packageName] = $package->getLicense();
+                    return false;
                 }
-            })
-        );
+            } else {
+                throw new \LogicException('Filtering can work only on complete packages');
+            }
+        });
 
         if ($filtered !== []) {
-            $this->io->write('<warning>Some packages were excluded due to license policy:</warning>');
+            $this->io->write('<warning>Some packages do not conform to the license policy:</warning>');
             $idx = 1;
             foreach ($filtered as $package => $licenses) {
                 $license = $licenses === [] ? '(no license set)' : implode(' | ', $licenses);
                 $this->io->write("<warning>{$idx}. {$package}: {$license}</warning>");
                 ++$idx;
             }
+        }
+
+        if ($config->isEnforced()) {
+            $event->setPackages($packages);
         }
     }
 }

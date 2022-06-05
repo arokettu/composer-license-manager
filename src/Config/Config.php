@@ -21,6 +21,8 @@ final class Config
     private $packagesAllowed;
     /** @var bool */
     private $allowEmptyLicense;
+    /** @var bool */
+    private $enforced;
 
     public static function fromComposer(Composer $composer): self
     {
@@ -40,7 +42,8 @@ final class Config
             ConfigHelper::valueToArray($config['licenses']['allowed'] ?? ['*']),
             $config['licenses']['allow-empty'] ?? false,
             ConfigHelper::valueToArray($config['licenses']['forbidden'] ?? []),
-            ConfigHelper::valueToArray($config['packages']['allowed'] ?? [])
+            ConfigHelper::valueToArray($config['packages']['allowed'] ?? []),
+            $config['enforced'] ?? true
         );
     }
 
@@ -48,12 +51,14 @@ final class Config
         array $licensesAllowed,
         bool $allowEmptyLicense,
         array $licensesForbidden,
-        array $packagesAllowed
+        array $packagesAllowed,
+        bool $enforced
     ) {
         $this->licensesAllowed = $this->normalizeAndSplitGlobs($licensesAllowed);
         $this->licensesForbidden = $this->normalizeAndSplitGlobs($licensesForbidden);
         $this->packagesAllowed = $this->normalizeAndSplitGlobs($packagesAllowed);
         $this->allowEmptyLicense = $allowEmptyLicense;
+        $this->enforced = $enforced;
     }
 
     /**
@@ -101,5 +106,11 @@ final class Config
     public function isEmptyLicenseAllowed(): bool
     {
         return $this->allowEmptyLicense;
+    }
+
+    /** @return bool */
+    public function isEnforced(): bool
+    {
+        return $this->enforced;
     }
 }

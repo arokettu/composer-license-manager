@@ -47,6 +47,10 @@ final class ScanCommand extends BaseCommand
             }
         }
 
+        if ($exit === self::EXIT_SUCCESS) {
+            $io->write('<info>All licenses conform to your policy</info>');
+        }
+
         return $exit;
     }
 }

@@ -30,7 +30,8 @@
             },
             "packages": {
                 "allowed": ["laminas/laminas-code", "npm-asset/deep-extend"]
-            }
+            },
+            "enforced": false
         }
     }
 }
