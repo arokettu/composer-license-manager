@@ -4,6 +4,10 @@
             "type": "path",
             "version": "dev-master",
             "url": ".."
+        },
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
         }
     ],
     "require": {
@@ -19,8 +23,9 @@
     "extra": {
         "arokettu/composer-license-manager": {
             "licenses": {
-                "allowed": ["MIT", "BSD-*"],
-                "forbidden": ["BSD-3-Clause"]
+                "allowed": ["MIT", "BSD-*", "ISC", "artistic-2.0", "apache-2.0", "(wtfpl*", "*"],
+                "forbidden": ["BSD-3-Clause"],
+                "allow-empty": true
             },
             "packages": {
                 "allowed": ["laminas/laminas-code"]

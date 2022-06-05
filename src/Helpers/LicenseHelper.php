@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Arokettu\Composer\LicenseManager\Helpers;
 
 use Arokettu\Composer\LicenseManager\Config\Config;
-use Arokettu\Composer\LicenseManager\LicenseManagerPlugin;
 use Composer\Package\CompletePackageInterface;
 
 /**
@@ -19,13 +18,17 @@ class LicenseHelper
             return true;
         }
 
+        $licenses = $package->getLicense();
+
+        if ($licenses === [] && $config->isEmptyLicenseAllowed()) {
+            return true;
+        }
+
         $allowed = $config->getLicensesAllowed();
         $forbidden = $config->getLicensesForbidden();
 
-        foreach ($package->getLicense() as $license) {
-            if (str_starts_with($license, '(')) {
-                continue; // license expressions are not supported for now
-            }
+        foreach ($licenses as $license) {
+            $license = strtolower(trim($license));
 
             if (ConfigHelper::isInPlainList($license, $forbidden)) {
                 continue; // blacklisted by name

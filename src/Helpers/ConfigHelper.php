@@ -47,6 +47,14 @@ final class ConfigHelper
     public static function isInGlobList(string $value, array $list): bool
     {
         foreach ($list['glob'] as $prefix) {
+            if ($prefix === '') {
+                return true; // for glob '*' allow everything including expressions
+            }
+
+            if (str_contains($value, ' ')) {
+                return false; // expressions are never covered by glob
+            }
+
             if (str_starts_with($value, $prefix)) {
                 return true;
             }

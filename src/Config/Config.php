@@ -19,6 +19,8 @@ final class Config
     private $licensesForbidden;
     /** @var string[][] */
     private $packagesAllowed;
+    /** @var bool */
+    private $allowEmptyLicense;
 
     public static function fromComposer(Composer $composer): self
     {
@@ -31,19 +33,22 @@ final class Config
 
         return new self(
             ConfigHelper::valueToArray($config['licenses']['allowed'] ?? ['*']),
+            $config['licenses']['allow-empty'] ?? false,
             ConfigHelper::valueToArray($config['licenses']['forbidden'] ?? []),
             ConfigHelper::valueToArray($config['packages']['allowed'] ?? [])
         );
     }
 
-    private function __construct(
+    public function __construct(
         array $licensesAllowed,
+        bool $allowEmptyLicense,
         array $licensesForbidden,
         array $packagesAllowed
     ) {
-        $this->licensesAllowed = $this->splitGlobs($licensesAllowed);
-        $this->licensesForbidden = $this->splitGlobs($licensesForbidden);
-        $this->packagesAllowed = $this->splitGlobs($packagesAllowed);
+        $this->licensesAllowed = $this->normalizeAndSplitGlobs($licensesAllowed);
+        $this->licensesForbidden = $this->normalizeAndSplitGlobs($licensesForbidden);
+        $this->packagesAllowed = $this->normalizeAndSplitGlobs($packagesAllowed);
+        $this->allowEmptyLicense = $allowEmptyLicense;
     }
 
     /**
@@ -73,9 +78,10 @@ final class Config
     /**
      * @return string[][]
      */
-    private function splitGlobs(array $list): array
+    private function normalizeAndSplitGlobs(array $list): array
     {
         return array_reduce($list, static function (array $carry, string $item) {
+            $item = strtolower($item); // normalize to lowercase
             /** @var string[][] $carry */
             if (str_ends_with($item, '*')) {
                 $carry['glob'][] = substr($item, 0, -1);
@@ -85,5 +91,10 @@ final class Config
 
             return $carry;
         }, ['list' => [], 'glob' => []]);
+    }
+
+    public function isEmptyLicenseAllowed(): bool
+    {
+        return $this->allowEmptyLicense;
     }
 }
