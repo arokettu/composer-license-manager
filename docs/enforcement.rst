@@ -9,6 +9,9 @@ Theory
 The plugin removes non-conforming packages from the package pool before the solver stage.
 That, to my knowledge, is the only stage in Composer 2.x where writing ``composer.lock`` with an invalid set of packages can be prevented.
 
+The package never prevents installation of itself so you must accept its license even if you forbid MIT in general.
+(But how do you use Composer then?)
+
 Effects
 =======
 
