@@ -4,7 +4,7 @@
 
 *Jun 7, 2022*
 
-* Shortcut config for `liceneses.allowed` and `packages.allowed` 
+* Shortcut config for `liceneses.allowed` and `packages.allowed`
 
 ## 1.0.1
 
