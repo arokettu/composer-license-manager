@@ -32,27 +32,35 @@ class PrePoolCreateEventHandler
     public function handle(PrePoolCreateEvent $event): void
     {
         $config = Config::fromComposer($this->composer);
+        $rootPackage = $this->composer->getPackage()->getName();
         /** @var array<string, array<int, string>> $filtered */
         $filtered = [];
 
-        $packages = array_filter($event->getPackages(), function (PackageInterface $package) use (&$filtered, $config) {
-            $packageName = $package->getName();
+        $packages = array_filter(
+            $event->getPackages(),
+            function (PackageInterface $package) use (&$filtered, $config, $rootPackage) {
+                $packageName = $package->getName();
 
-            if ($packageName === LicenseManagerPlugin::PACKAGE || !str_contains($packageName, '/')) {
-                return true;
-            }
-
-            if ($package instanceof CompletePackageInterface) {
-                if (LicenseHelper::isPermitted($package, $config)) {
+                if (
+                    $packageName === $rootPackage || // do not block root package
+                    $packageName === LicenseManagerPlugin::PACKAGE || // do not block the manager itself
+                    !str_contains($packageName, '/') // platform and composer packages
+                ) {
                     return true;
-                } else {
-                    $filtered[$packageName] = $package->getLicense();
-                    return false;
                 }
-            } else {
-                throw new \LogicException('Filtering can work only on complete packages');
+
+                if ($package instanceof CompletePackageInterface) {
+                    if (LicenseHelper::isPermitted($package, $config)) {
+                        return true;
+                    } else {
+                        $filtered[$packageName] = $package->getLicense();
+                        return false;
+                    }
+                } else {
+                    throw new \LogicException('Filtering can work only on complete packages');
+                }
             }
-        });
+        );
 
         if ($filtered !== []) {
             $this->io->write('<warning>Some packages do not conform to the license policy:</warning>');
