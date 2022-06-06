@@ -29,6 +29,8 @@ Licenses
 
 Licenses section configures desired and undesired licenses.
 
+.. versionadded:: 1.1 ``{ "licenses": [...] }`` is a shortcut for ``{ "licenses": { "allowed": [...] } }``
+
 ``"allowed"``
     Whitelisted licenses. Allows globs in prefix form (``*`` as the last character).
     Default: ``["*"]``
@@ -44,7 +46,6 @@ Licenses section configures desired and undesired licenses.
     For example ``BSD-*`` `will allow <https://spdx.org/licenses/>`__ such licenses as
     ``BSD-Protection`` (non GPL-compatible),
     ``BSD-3-Clause-No-Nuclear-License`` and ``BSD-3-Clause-No-Military-License`` (both non-free)
-
 
 Check order:
 
@@ -63,6 +64,8 @@ Packages
 ========
 
 Package exceptions to the policy enforcement.
+
+.. versionadded:: 1.1 ``{ "packages": [...] }`` is a shortcut for ``{ "packages": { "allowed": [...] } }``
 
 ``"allowed"``
     Whitelisted packages. Allows globs in prefix form (``*`` as the last character).

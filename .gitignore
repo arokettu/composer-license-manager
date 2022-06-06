@@ -1,5 +1,5 @@
 /.idea
 /reports
-/docs/html
+/docs/build
 vendor
 composer.lock
