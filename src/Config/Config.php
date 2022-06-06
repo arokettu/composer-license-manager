@@ -108,7 +108,6 @@ final class Config
         return $this->allowEmptyLicense;
     }
 
-    /** @return bool */
     public function isEnforced(): bool
     {
         return $this->enforced;
