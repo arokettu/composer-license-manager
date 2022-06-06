@@ -38,11 +38,21 @@ final class Config
 
     public static function fromArray(array $config): self
     {
+        $licenses = $config['licenses'] ?? [];
+        if ($licenses !== [] && array_is_list($licenses)) {
+            $licenses = ['allowed' => $licenses];
+        }
+
+        $packages = $config['packages'] ?? [];
+        if ($packages !== [] && array_is_list($packages)) {
+            $packages = ['allowed' => $packages];
+        }
+
         return new self(
-            ConfigHelper::valueToArray($config['licenses']['allowed'] ?? ['*']),
-            $config['licenses']['allow-empty'] ?? false,
-            ConfigHelper::valueToArray($config['licenses']['forbidden'] ?? []),
-            ConfigHelper::valueToArray($config['packages']['allowed'] ?? []),
+            ConfigHelper::valueToArray($licenses['allowed'] ?? ['*']),
+            $licenses['allow-empty'] ?? false,
+            ConfigHelper::valueToArray($licenses['forbidden'] ?? []),
+            ConfigHelper::valueToArray($packages['allowed'] ?? []),
             $config['enforced'] ?? true
         );
     }

@@ -44,4 +44,20 @@ class ConfigTest extends TestCase
 
         Config::fromArray(['licenses' => ['allowed' => ['MIT' => 'MIT', 123 => 123]]]);
     }
+
+    public function testLicenseShortcutsEquivalence(): void
+    {
+        $config1 = Config::fromArray(['licenses' => ['allowed' => ['MIT', 'BSD-2-Clause', 'GPL-*']]]);
+        $config2 = Config::fromArray(['licenses' => ['MIT', 'BSD-2-Clause', 'GPL-*']]);
+
+        self::assertEquals($config1, $config2);
+    }
+
+    public function testPackageShortcutsEquivalence(): void
+    {
+        $config1 = Config::fromArray(['packages' => ['allowed' => ['foo/bar', 'foo/baz', 'bar/*']]]);
+        $config2 = Config::fromArray(['packages' => ['foo/bar', 'foo/baz', 'bar/*']]);
+
+        self::assertEquals($config1, $config2);
+    }
 }
