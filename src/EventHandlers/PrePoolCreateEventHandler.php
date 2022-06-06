@@ -16,7 +16,7 @@ use Composer\Plugin\PrePoolCreateEvent;
 /**
  * @internal
  */
-class PrePoolCreateEventHandler
+final class PrePoolCreateEventHandler
 {
     /** @var Composer */
     private $composer;

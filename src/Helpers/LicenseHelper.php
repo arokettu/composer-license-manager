@@ -10,7 +10,7 @@ use Composer\Package\CompletePackageInterface;
 /**
  * @internal
  */
-class LicenseHelper
+final class LicenseHelper
 {
     public static function isPermitted(CompletePackageInterface $package, Config $config): bool
     {
