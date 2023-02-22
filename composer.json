@@ -54,7 +54,7 @@
     "require-dev": {
         "composer/composer": "^2.0",
         "phpunit/phpunit": "^7.5 || ^9.5",
-        "sandfox.dev/code-standard": "^10@dev",
+        "sandfox.dev/code-standard": "^1",
         "squizlabs/php_codesniffer": "*",
         "vimeo/psalm": "^4.23"
     }
