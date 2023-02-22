@@ -1,5 +1,9 @@
+/docs/*.py          export-ignore
+/docs/*.txt         export-ignore
+/docs/_*            export-ignore
 /sandbox            export-ignore
 /tests              export-ignore
 /.git*              export-ignore
 /*.yml              export-ignore
 /*.xml              export-ignore
+/*.xml.dist         export-ignore
