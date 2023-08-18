@@ -1,6 +1,7 @@
 /.idea
 /reports
 /docs/build
+/docs/venv
 vendor
 composer.lock
 /.phpunit.result.cache
