@@ -7,7 +7,6 @@ namespace Arokettu\Composer\LicenseManager\Commands;
 use Arokettu\Composer\LicenseManager\Config\Config;
 use Arokettu\Composer\LicenseManager\Helpers\LicenseHelper;
 use Composer\Command\BaseCommand;
-use Composer\Composer;
 use Composer\Package\CompletePackageInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -28,8 +27,7 @@ final class ScanCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        /** @var Composer $composer */
-        $composer = $this->getComposer();
+        $composer = $this->requireComposer();
         $io = $this->getIO();
         $config = Config::fromComposer($composer);
 
