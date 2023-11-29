@@ -15,6 +15,7 @@ use Composer\Plugin\PrePoolCreateEvent;
 
 /**
  * @internal
+ * @psalm-suppress MissingConstructor
  */
 final class LicenseManagerPlugin implements PluginInterface, Capable, EventSubscriberInterface
 {
@@ -49,6 +50,11 @@ final class LicenseManagerPlugin implements PluginInterface, Capable, EventSubsc
         return [PluginEvents::PRE_POOL_CREATE => 'handlePrePoolCreate'];
     }
 
+    /**
+     * @psalm-suppress PossiblyUnusedMethod
+     * @psalm-suppress TypeDoesNotContainType
+     * @psalm-suppress RedundantPropertyInitializationCheck
+     */
     public function handlePrePoolCreate(PrePoolCreateEvent $event): void
     {
         if (!isset($this->composer) || !isset($this->io)) {
