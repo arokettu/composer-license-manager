@@ -9,10 +9,7 @@ namespace Arokettu\Composer\LicenseManager\Helpers;
  */
 final class ConfigHelper
 {
-    /**
-     * @param mixed $value
-     */
-    public static function valueToArray($value): array
+    public static function valueToArray(mixed $value): array
     {
         if (!\is_array($value)) {
             $value = [$value];
@@ -32,7 +29,7 @@ final class ConfigHelper
     }
 
     /**
-     * @param string[][] $list
+     * @param array<list<string>> $list
      */
     public static function isInList(string $value, array $list): bool
     {
@@ -40,7 +37,7 @@ final class ConfigHelper
     }
 
     /**
-     * @param string[][] $list
+     * @param array<list<string>> $list
      */
     public static function isInPlainList(string $value, array $list): bool
     {
@@ -48,7 +45,7 @@ final class ConfigHelper
     }
 
     /**
-     * @param string[][] $list
+     * @param array<list<string>> $list
      */
     public static function isInGlobList(string $value, array $list): bool
     {

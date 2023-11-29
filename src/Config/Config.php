@@ -13,16 +13,12 @@ use Composer\Composer;
  */
 final class Config
 {
-    /** @var string[][] */
-    private $licensesAllowed;
-    /** @var string[][] */
-    private $licensesForbidden;
-    /** @var string[][] */
-    private $packagesAllowed;
-    /** @var bool */
-    private $allowEmptyLicense;
-    /** @var bool */
-    private $enforced;
+    /** @var array<list<string>> */
+    private array $licensesAllowed;
+    /** @var array<list<string>> */
+    private array $licensesForbidden;
+    /** @var array<list<string>> */
+    private array $packagesAllowed;
 
     public static function fromComposer(Composer $composer): self
     {
@@ -50,29 +46,27 @@ final class Config
 
         return new self(
             ConfigHelper::valueToArray($licenses['allowed'] ?? ['*']),
-            $licenses['allow-empty'] ?? false,
             ConfigHelper::valueToArray($licenses['forbidden'] ?? []),
             ConfigHelper::valueToArray($packages['allowed'] ?? []),
+            $licenses['allow-empty'] ?? false,
             $config['enforced'] ?? true
         );
     }
 
     private function __construct(
         array $licensesAllowed,
-        bool $allowEmptyLicense,
         array $licensesForbidden,
         array $packagesAllowed,
-        bool $enforced
+        private readonly bool $allowEmptyLicense,
+        private readonly bool $enforced,
     ) {
         $this->licensesAllowed = $this->normalizeAndSplitGlobs($licensesAllowed);
         $this->licensesForbidden = $this->normalizeAndSplitGlobs($licensesForbidden);
         $this->packagesAllowed = $this->normalizeAndSplitGlobs($packagesAllowed);
-        $this->allowEmptyLicense = $allowEmptyLicense;
-        $this->enforced = $enforced;
     }
 
     /**
-     * @return string[][]
+     * @return array<list<string>>
      */
     public function getLicensesAllowed(): array
     {
@@ -80,7 +74,7 @@ final class Config
     }
 
     /**
-     * @return string[][]
+     * @return array<list<string>>
      */
     public function getLicensesForbidden(): array
     {
@@ -88,7 +82,7 @@ final class Config
     }
 
     /**
-     * @return string[][]
+     * @return array<list<string>>
      */
     public function getPackagesAllowed(): array
     {
@@ -96,13 +90,13 @@ final class Config
     }
 
     /**
-     * @return string[][]
+     * @return array<list<string>>
      */
     private function normalizeAndSplitGlobs(array $list): array
     {
         return array_reduce($list, static function (array $carry, string $item) {
             $item = strtolower($item); // normalize to lowercase
-            /** @var string[][] $carry */
+            /** @var array<list<string>> $carry */
             if (str_ends_with($item, '*')) {
                 $carry['glob'][] = substr($item, 0, -1);
             } else {

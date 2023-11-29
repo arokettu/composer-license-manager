@@ -18,16 +18,10 @@ use Composer\Plugin\PrePoolCreateEvent;
  */
 final class PrePoolCreateEventHandler
 {
-    /** @var Composer */
-    private $composer;
-    /** @var IOInterface */
-    private $io;
-
-    public function __construct(Composer $composer, IOInterface $io)
-    {
-        $this->composer = $composer;
-        $this->io = $io;
-    }
+    public function __construct(
+        private readonly Composer $composer,
+        private readonly IOInterface $io,
+    ) {}
 
     public function handle(PrePoolCreateEvent $event): void
     {
