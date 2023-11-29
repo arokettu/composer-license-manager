@@ -21,7 +21,8 @@ final class PrePoolCreateEventHandler
     public function __construct(
         private readonly Composer $composer,
         private readonly IOInterface $io,
-    ) {}
+    ) {
+    }
 
     public function handle(PrePoolCreateEvent $event): void
     {
