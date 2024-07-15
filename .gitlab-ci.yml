@@ -25,7 +25,7 @@ cache:
   script:
     - composer config platform --unset
     - composer update
-    - vendor/bin/phpunit
+    - vendor/bin/phpunit --fail-on-deprecation --fail-on-notice --fail-on-warning
 
 # coverage
 #coverage:
