@@ -15,8 +15,10 @@
     "require": {
         "arokettu/composer-license-manager": "dev-master",
         "laminas/laminas-code": "^4.5",
-        "symfony/string": "^6.1",
         "npm-asset/jquery-form": "^4.3"
+    },
+    "require-dev": {
+        "symfony/string": "^6.1"
     },
     "config": {
         "allow-plugins": {
