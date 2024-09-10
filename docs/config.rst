@@ -1,7 +1,7 @@
 Configuration
 #############
 
-The plugin is configured in the ``extras`` section of the ``composer.json`` file.
+The plugin is configured in the ``extra`` section of the ``composer.json`` file.
 
 Example
 =======
