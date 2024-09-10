@@ -9,7 +9,7 @@ Example
 .. code-block:: json
 
     {
-        "extras": {
+        "extra": {
             "arokettu/composer-license-manager": {
                 "licenses": {
                     "allowed": ["MIT", "LGPL-*"],

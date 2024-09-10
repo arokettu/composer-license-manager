@@ -18,7 +18,7 @@ The plugin is configured in the ``extras`` section of the ``composer.json`` file
 
 ```json
 {
-    "extras": {
+    "extra": {
         "arokettu/composer-license-manager": {
             "licenses": {
                 "allowed": ["MIT", "LGPL-*"],
