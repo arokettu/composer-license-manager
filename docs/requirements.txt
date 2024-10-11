@@ -1,2 +1,1 @@
-sphinx>=7
-furo
+sphinx-book-theme
