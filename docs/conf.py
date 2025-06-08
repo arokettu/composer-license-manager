@@ -37,9 +37,9 @@ html_theme_options = {
             "type": "fontawesome",
         },
         {
-            "name": "BitBucket",
-            "url": "https://bitbucket.org/sandfox/" + repo,
-            "icon": "fa-brands fa-bitbucket",
+            "name": "Codeberg",
+            "url": "https://codeberg.org/sandfox/" + repo,
+            "icon": "fa-solid fa-mountain",
             "type": "fontawesome",
         },
         {
