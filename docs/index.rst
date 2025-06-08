@@ -1,7 +1,7 @@
 Composer License Manager
 ########################
 
-|Packagist| |GitLab| |GitHub| |Bitbucket| |Gitea|
+|Packagist| |GitLab| |GitHub| |Codeberg| |Gitea|
 
 License management plugin for Composer.
 
@@ -34,7 +34,7 @@ The library is available as open source under the terms of the `MIT License`_.
    :target:     https://github.com/arokettu/composer-license-manager
 .. |GitLab|     image:: https://img.shields.io/badge/get%20on-GitLab-informational.svg?style=flat-square&logo=gitlab
    :target:     https://gitlab.com/sandfox/composer-license-manager
-.. |Bitbucket|  image:: https://img.shields.io/badge/get%20on-Bitbucket-informational.svg?style=flat-square&logo=bitbucket
-   :target:     https://bitbucket.org/sandfox/composer-license-manager
+.. |Codeberg|   image:: https://img.shields.io/badge/get%20on-Codeberg-informational.svg?style=flat-square&logo=codeberg
+   :target:     https://codeberg.org/sandfox/composer-license-manager
 .. |Gitea|      image:: https://img.shields.io/badge/get%20on-Gitea-informational.svg?style=flat-square&logo=gitea
    :target:     https://sandfox.org/sandfox/composer-license-manager
