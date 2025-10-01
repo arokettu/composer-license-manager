@@ -6,7 +6,7 @@ namespace Arokettu\Composer\LicenseManager\Tests\Models;
 
 use Composer\Package\CompletePackage;
 
-class MockPackage extends CompletePackage
+final class MockPackage extends CompletePackage
 {
     public function __construct(string $name, array $licenses)
     {

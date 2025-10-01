@@ -33,7 +33,7 @@ final class PrePoolCreateEventHandler
 
         $packages = array_filter(
             $event->getPackages(),
-            function (PackageInterface $package) use (&$filtered, $config, $rootPackage) {
+            static function (PackageInterface $package) use (&$filtered, $config, $rootPackage) {
                 $packageName = $package->getName();
 
                 if (
@@ -54,7 +54,7 @@ final class PrePoolCreateEventHandler
                 } else {
                     throw new \LogicException('Filtering can work only on complete packages');
                 }
-            }
+            },
         );
 
         if ($filtered !== []) {

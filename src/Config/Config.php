@@ -49,7 +49,7 @@ final class Config
             ConfigHelper::valueToArray($licenses['forbidden'] ?? []),
             ConfigHelper::valueToArray($packages['allowed'] ?? []),
             $licenses['allow-empty'] ?? false,
-            $config['enforced'] ?? true
+            $config['enforced'] ?? true,
         );
     }
 

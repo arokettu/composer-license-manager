@@ -9,7 +9,7 @@ use Arokettu\Composer\LicenseManager\Helpers\LicenseHelper;
 use Arokettu\Composer\LicenseManager\Tests\Models\MockPackage;
 use PHPUnit\Framework\TestCase;
 
-class LicenseTest extends TestCase
+final class LicenseTest extends TestCase
 {
     public function testDefaultConfig(): void
     {
