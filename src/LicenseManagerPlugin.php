@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @copyright 2022 Anton Smirnov
+ * @license MIT https://spdx.org/licenses/MIT.html
+ */
+
 declare(strict_types=1);
 
 namespace Arokettu\Composer\LicenseManager;
@@ -32,10 +37,12 @@ final class LicenseManagerPlugin implements PluginInterface, Capable, EventSubsc
 
     public function deactivate(Composer $composer, IOInterface $io): void
     {
+        // unused
     }
 
     public function uninstall(Composer $composer, IOInterface $io): void
     {
+        // unused
     }
 
     public function getCapabilities(): array
