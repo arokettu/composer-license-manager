@@ -14,6 +14,7 @@ use Arokettu\Composer\LicenseManager\Helpers\LicenseHelper;
 use Arokettu\Composer\LicenseManager\LicenseManagerPlugin;
 use Composer\Composer;
 use Composer\IO\IOInterface;
+use Composer\Package\BasePackage;
 use Composer\Package\CompletePackageInterface;
 use Composer\Package\PackageInterface;
 use Composer\Plugin\PrePoolCreateEvent;
@@ -33,12 +34,19 @@ final class PrePoolCreateEventHandler
     {
         $config = Config::fromComposer($this->composer);
         $rootPackage = $this->composer->getPackage()->getName();
-        /** @var array<string, array<int, string>> $filtered */
-        $filtered = [];
+        /** @var array<string, array<int, string>> $filteredList */
+        $filteredList = [];
+        /** @var array<BasePackage> $filteredList */
+        $filteredPackages = [];
 
         $packages = array_filter(
             $event->getPackages(),
-            static function (PackageInterface $package) use (&$filtered, $config, $rootPackage) {
+            static function (PackageInterface $package) use (
+                &$filteredList,
+                &$filteredPackages,
+                $config,
+                $rootPackage,
+            ) {
                 $packageName = $package->getName();
 
                 if (
@@ -53,7 +61,8 @@ final class PrePoolCreateEventHandler
                     if (LicenseHelper::isPermitted($package, $config)) {
                         return true;
                     } else {
-                        $filtered[$packageName] = $package->getLicense();
+                        $filteredList[$packageName] = $package->getLicense(); // display only once
+                        $filteredPackages[] = $package;
                         return false;
                     }
                 } else {
@@ -62,10 +71,10 @@ final class PrePoolCreateEventHandler
             },
         );
 
-        if ($filtered !== []) {
+        if ($filteredList !== []) {
             $this->io->write('<warning>Some packages do not conform to the license policy:</warning>');
             $idx = 1;
-            foreach ($filtered as $package => $licenses) {
+            foreach ($filteredList as $package => $licenses) {
                 $license = $licenses === [] ? '(no license set)' : implode(' | ', $licenses);
                 $this->io->write("<warning>{$idx}. {$package}: {$license}</warning>");
                 ++$idx;
@@ -74,6 +83,10 @@ final class PrePoolCreateEventHandler
 
         if ($config->isEnforced()) {
             $event->setPackages($packages);
+            $event->setUnacceptableFixedPackages(array_unique(array_merge(
+                $event->getUnacceptableFixedPackages(),
+                array_intersect($filteredPackages, $event->getRequest()->getFixedOrLockedPackages()),
+            )));
         }
     }
 }
