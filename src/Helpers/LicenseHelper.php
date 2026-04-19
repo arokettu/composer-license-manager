@@ -33,6 +33,16 @@ final class LicenseHelper
         $forbidden = $config->getLicensesForbidden();
 
         foreach ($licenses as $license) {
+            if (!\is_string($license)) {
+                $license = $license['name'] ?? null;
+                if ($license === null || !\is_string($license)) {
+                    throw new \Error(\sprintf(
+                        'Invalid license declaration %s found in package %s',
+                        json_encode($licenses, \JSON_THROW_ON_ERROR),
+                        $package->getName(),
+                    ));
+                }
+            }
             $license = strtolower(trim($license));
 
             if (ConfigHelper::isInPlainList($license, $forbidden)) {
